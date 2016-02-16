@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>Ambient Light Events</title>
+
+	<meta name="viewport" content="width=device-width">
+
+	<style>
+		body,div,p{
+			margin: 0;
+			padding: 0;
+			font-family: sans-serif;
+		}
+
+		#light {
+			width: 100vw;
+			height: 100vh; 
+			background-image: url(img.png);
+			background-size: 256px 256px;
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+			transition:1s;
+		}
+
+		#light-value{
+			padding: 4px;
+			position: absolute;
+			bottom: 4px;
+			left: 4px;
+			background-color: rgba(255,255,255,0.2)
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="light"></div>
+	<p id="light-value"></p>
+
+	<script>
+		window.addEventListener('devicelight', function(event) {
+		  let lv = document.getElementById("light-value")
+		  lv.innerText = `Lux: ${event.value}`
+
+		  var html = document.getElementById("light")
+		  var v = Math.floor(event.value)
+		  
+		  if( v > 512 ) v = 512
+		  if( v != 0) v / 2
+		  
+		  v = `rgb(${v},${v},${v})` 
+
+		  html.style.backgroundColor = v
+		});
+	</script>
+</body>
+</html>
